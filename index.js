@@ -3,7 +3,13 @@ const { server } = require("./src/config/config");
 const oracle = require("./src/utils/oracle");
 const app = express();
 
+const userRoutes = require("./src/routes/loginUser");
+
 app.use(express.json());
+
+
+app.use(userRoutes);
+
 
 oracle
   .start()

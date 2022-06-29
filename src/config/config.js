@@ -9,8 +9,8 @@ module.exports = {
     user: process.env.ORACLE_USER,
     password: process.env.ORACLE_PASSSWORD,
     connectString: process.env.ORACLE_CONNECT_STRING,
+    poolMin: 10,
     poolMax: 10,
-    poolMin: 1,
-    poolIncrement: 1,
+    poolIncrement: 0,
   },
 };

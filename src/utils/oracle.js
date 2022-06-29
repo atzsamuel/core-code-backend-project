@@ -22,7 +22,7 @@ module.exports.start = async () => {
 
 // Close database
 module.exports.close = async () => {
-  await oracledb.closePool(0);
+  await oracledb.getPool().close(0);
 };
 
 // Request handler (pool handler)
@@ -31,7 +31,7 @@ module.exports.pool = async (statement, binds = [], opts = {}) => {
   let result = [];
   opts.outFormat = oracledb.OBJECT;
   try {
-    conn = await oraclepdb.getConnection();
+    conn = await oracledb.getConnection();
     result = await conn.execute(statement, binds, opts);
     return result;
   } catch (error) {
