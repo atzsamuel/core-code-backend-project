@@ -9,7 +9,7 @@ const {
 } = require("../controllers/bankAccount");
 
 router.post("/bank/createAccount", createBankAccount);
-router.post("/bank/update", updateBankAccount);
+router.post("/bank/updateAccount", updateBankAccount);
 router.get("/bank/currencies", getCurrencies);
 router.get("/bank/typeAccounts", getTypes);
 

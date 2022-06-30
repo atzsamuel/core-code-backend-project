@@ -27,6 +27,7 @@ module.exports.createBankAccount = async (req, res, next) => {
 module.exports.updateBankAccount = async (req, res, next) => {
   const args = {
     ba_account_id: req.body.ba_account_id,
+    user_id: req.body.user_id,
     account_status: req.body.account_status,
   };
 

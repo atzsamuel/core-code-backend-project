@@ -27,9 +27,10 @@ module.exports.create = ({
   return pool(SQL_CREATE_BANK_ACCOUNT, bindings, { autoCommit: true });
 };
 
-module.exports.update = ({ ba_account_id, account_status }) => {
+module.exports.update = ({ ba_account_id, user_id, account_status }) => {
   const bindings = {
     ba_account_id,
+    user_id,
     account_status,
   };
   const SQL_UPDATE_BANK_ACCOUNT = `
@@ -37,7 +38,7 @@ module.exports.update = ({ ba_account_id, account_status }) => {
   SET
   ACCOUNT_STATUS = :account_status,
   MOD_DATE = SYSDATE
-  WHERE BA_ACCOUNT_ID = :ba_account_id`;
+  WHERE BA_ACCOUNT_ID = :ba_account_id AND LOGIN_USER_ID = :user_id`;
   console.log(bindings, SQL_UPDATE_BANK_ACCOUNT);
   return pool(SQL_UPDATE_BANK_ACCOUNT, bindings, { autoCommit: true });
 };
@@ -46,10 +47,10 @@ module.exports.getCurrency = () => {
   const SQL_GET_CURRENCY = `
   SELECT BA_CURRENCY_ID AS ID,NAME FROM BA_CURRENCY ORDER BY BA_CURRENCY_ID`;
   return pool(SQL_GET_CURRENCY, {}, { autoCommit: true });
-}
+};
 
 module.exports.getTypeAccount = () => {
   const SQL_GET_TYPE_ACCOUNT = `
   SELECT BA_TYPE_ID AS ID, NAME FROM BA_TYPE ORDER BY BA_TYPE_ID`;
   return pool(SQL_GET_TYPE_ACCOUNT, {}, { autoCommit: true });
-}
+};
