@@ -32,6 +32,7 @@ module.exports.registerUser = async (req, res, next) => {
         ],
       });
   } catch (error) {
+    console.error(error);
     res
       .status(400)
       .clearCookie("auth_token", { sameSite: "none", secure: true })
@@ -84,6 +85,7 @@ module.exports.loginUser = async (req, res, next) => {
         message: "User login failed!, invalid credentials!",
       });
   } catch (error) {
+    console.error(error);
     res
       .status(400)
       .clearCookie("auth_token", { sameSite: "none", secure: true })

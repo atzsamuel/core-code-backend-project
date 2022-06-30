@@ -18,6 +18,7 @@ module.exports.createBankAccount = async (req, res, next) => {
       message: "Bank account created successfully!",
     });
   } catch (error) {
+    console.error(error);
     res.status(400).json({
       message: "Bank account creation failed!",
     });
@@ -37,6 +38,7 @@ module.exports.updateBankAccount = async (req, res, next) => {
       message: "Bank account updated successfully!",
     });
   } catch (error) {
+    console.error(error);
     res.status(400).json({
       message: "Bank account update failed!",
     });
@@ -51,6 +53,7 @@ module.exports.getCurrencies = async (req, res, next) => {
       data: rows,
     });
   } catch (error) {
+    console.error(error);
     res.status(400).json({
       message: "Currencies retrieval failed!",
     });
@@ -65,6 +68,7 @@ module.exports.getTypes = async (req, res, next) => {
       data: rows,
     });
   } catch (error) {
+    console.error(error);
     res.status(400).json({
       message: "Types accounts retrieval failed!",
     });
