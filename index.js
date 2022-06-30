@@ -8,6 +8,7 @@ const guard = require("./src/guard/guard");
 
 const userRoutes = require("./src/routes/loginUser");
 const bankRoutes = require("./src/routes/bankAccount");
+const transactionRoutes = require("./src/routes/transaction");
 
 const invalidRoutes = require("./src/routes/404");
 
@@ -23,6 +24,7 @@ app.use(guard);
 
 // api routes
 app.use(bankRoutes);
+app.use(transactionRoutes);
 
 // invalid endpoint handler
 app.use(invalidRoutes);

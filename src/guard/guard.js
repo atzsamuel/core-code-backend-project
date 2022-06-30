@@ -1,7 +1,7 @@
 const Guard = require("../models/guard");
 
 const guard = async (req, res, next) => {
-  console.log(req.headers);
+  //console.log(req.headers);
   if (
     !req.headers.authorization ||
     !req.headers.authorization.startsWith("Bearer ")
@@ -12,7 +12,7 @@ const guard = async (req, res, next) => {
   }
 
   const user_token = req.headers.authorization.split("Bearer ")[1];
-  console.log("userToken", user_token);
+ // console.log("userToken", user_token);
   try {
     const args = { user_token };
     const { rows } = await Guard.verifyUserToken(args);
