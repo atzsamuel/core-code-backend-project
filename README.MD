@@ -20,3 +20,6 @@ ORACLE_USER="yourOracleUser"
 ORACLE_PASSSWORD="yourOraclePassword"
 ORACLE_CONNECT_STRING="localhost:1521/orclpdb"
 ```
+
+## Documentation Api
+[Api documentation](https://docs.google.com/document/d/1cUSl4u4iEWOiDDfhMxLerFLrI-rly8_gJ8wQR_mAIho/edit?usp=sharing)
