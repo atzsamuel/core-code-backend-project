@@ -54,7 +54,7 @@ module.exports.loginUser = async (req, res, next) => {
       if (bycrypt.compareSync(args.password, hashpassword)) {
         args = { email: args.email, password: hashpassword };
         const { outBinds } = await loginUser.login(args);
-        const { user_token, firstname, lastname } = outBinds;
+        const { user_id, user_token, firstname, lastname } = outBinds;
         return res
           .status(200)
           .cookie("auth_token", user_token[0], {
@@ -66,6 +66,7 @@ module.exports.loginUser = async (req, res, next) => {
             message: "User logged in successfully!",
             data: [
               {
+                user_id: user_id[0],
                 user_token: user_token[0],
                 email: args.email,
                 firstname: firstname[0],

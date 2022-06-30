@@ -31,6 +31,7 @@ module.exports.login = ({ email, password }) => {
   const bindings = {
     email,
     password,
+    user_id: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER },
     user_token: { dir: oracledb.BIND_OUT, type: oracledb.STRING },
     firstname: { dir: oracledb.BIND_OUT, type: oracledb.STRING },
     lastname: { dir: oracledb.BIND_OUT, type: oracledb.STRING },
@@ -41,7 +42,7 @@ module.exports.login = ({ email, password }) => {
   USER_TOKEN = API_TOKEN(TO_CHAR(SYSDATE, 'DD-MM-YYYY HH24:MI:SS') || :password),
   MOD_DATE = SYSDATE
   WHERE EMAIL = :email
-  RETURNING USER_TOKEN, FIRST_NAME, LAST_NAME INTO :user_token,:firstname,:lastname`;
+  RETURNING LOGIN_USER_ID,USER_TOKEN, FIRST_NAME, LAST_NAME INTO :user_id,:user_token,:firstname,:lastname`;
   console.log(bindings, SQL_LOGIN_USER);
   return pool(SQL_LOGIN_USER, bindings, { autoCommit: true });
 };
