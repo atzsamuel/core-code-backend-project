@@ -1,10 +1,16 @@
 const { pool } = require("../utils/oracle");
 
-module.exports.verifyUserToken = (token) => {
+module.exports.verifyUserToken = ({ user_token }) => {
   const bindings = {
-    token,
+    user_token,
   };
   const SQL_VERIFY_USER_TOKEN = `
-  SELECT COUNT(*) FROM LOGIN_USER WHERE USER_TOKEN = :token`;
+  SELECT
+    LOGIN_USER_ID AS USER_ID,
+    EMAIL,
+    FIRST_NAME,
+    LAST_NAME
+       FROM LOGIN_USER
+WHERE USER_TOKEN=:user_token`;
   return pool(SQL_VERIFY_USER_TOKEN, bindings, { autoCommit: true });
 };
