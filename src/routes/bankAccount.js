@@ -5,12 +5,12 @@ const {
   createBankAccount,
   updateBankAccount,
   getCurrencies,
-  getTypeAccounts,
+  getTypes,
 } = require("../controllers/bankAccount");
 
-router.post("/bank/create", createBankAccount);
+router.post("/bank/createAccount", createBankAccount);
 router.post("/bank/update", updateBankAccount);
 router.get("/bank/currencies", getCurrencies);
-router.get("/bank/typeAccounts", getTypeAccounts);
+router.get("/bank/typeAccounts", getTypes);
 
 module.exports = router;

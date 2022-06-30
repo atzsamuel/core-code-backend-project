@@ -44,12 +44,12 @@ module.exports.update = ({ ba_account_id, account_status }) => {
 
 module.exports.getCurrency = () => {
   const SQL_GET_CURRENCY = `
-  SELECT BA_CURRENCY_ID AS ID,NAME FROM BA_CURRENCY`;
+  SELECT BA_CURRENCY_ID AS ID,NAME FROM BA_CURRENCY ORDER BY BA_CURRENCY_ID`;
   return pool(SQL_GET_CURRENCY, {}, { autoCommit: true });
 }
 
 module.exports.getTypeAccount = () => {
   const SQL_GET_TYPE_ACCOUNT = `
-  SELECT BA_TYPE_ID AS ID,NAME FROM BA_TYPE`;
+  SELECT BA_TYPE_ID AS ID, NAME FROM BA_TYPE ORDER BY BA_TYPE_ID`;
   return pool(SQL_GET_TYPE_ACCOUNT, {}, { autoCommit: true });
 }

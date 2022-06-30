@@ -54,9 +54,9 @@ module.exports.getCurrencies = async (req, res, next) => {
       message: "Currencies retrieval failed!",
     });
   }
-}
+};
 
-module.exports.getTypeAccounts = async (req, res, next) => {
+module.exports.getTypes = async (req, res, next) => {
   try {
     const { rows } = await bankAccount.getTypeAccount();
     res.status(200).json({
@@ -68,4 +68,4 @@ module.exports.getTypeAccounts = async (req, res, next) => {
       message: "Types accounts retrieval failed!",
     });
   }
-}
+};

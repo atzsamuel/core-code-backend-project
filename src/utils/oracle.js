@@ -33,6 +33,7 @@ module.exports.pool = async (statement, binds = [], opts = {}) => {
   try {
     conn = await oracledb.getConnection();
     result = await conn.execute(statement, binds, opts);
+    console.log("data QUERY result==>", result);
     return result;
   } catch (error) {
     console.error(error);
