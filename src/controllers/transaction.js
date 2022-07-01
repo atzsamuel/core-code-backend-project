@@ -115,3 +115,59 @@ module.exports.reportTransactions = async (req, res, next) => {
     });
   }
 };
+
+module.exports.transferAmount = async (req, res, next) => {
+  try {
+    const argsBalance = {
+      user_id: req.body.user_id,
+      account_id: req.body.account_id,
+    };
+    const { rows } = await transactions.getBalance(argsBalance);
+    const getBalance = parseFloat(rows[0].ACCOUNT_BALANCE);
+
+    if (getBalance < parseFloat(req.body.amount)) {
+      res.status(400).json({
+        message: "Insufficient funds",
+      });
+    } else {
+      // insert details of the transfer
+      const argsTransfer = {
+        description: req.body.description,
+        amount: parseFloat(req.body.amount),
+        account_id_destination: req.body.account_id_destination,
+        account_id: req.body.account_id,
+        user_id: req.body.user_id,
+      };
+      await transactions.insertTransfer(argsTransfer);
+      // update balance account origin
+      const argsNewBalanceOrigin = {
+        user_id: req.body.user_id,
+        account_id: req.body.account_id,
+        new_balance: parseFloat(getBalance) - parseFloat(req.body.amount),
+      };
+      await transactions.updateBalance(argsNewBalanceOrigin);
+      // update balance destination
+      const argsBalance = {
+        user_id: req.body.user_id,
+        account_id: req.body.account_id_destination,
+      };
+      const { rows } = await transactions.getBalance(argsBalance);
+      const getBalanceDestination = parseFloat(rows[0].ACCOUNT_BALANCE);
+      const argsNewBalanceDestination = {
+        user_id: req.body.user_id,
+        account_id: req.body.account_id,
+        new_balance:
+          parseFloat(getBalanceDestination) + parseFloat(req.body.amount),
+      };
+      await transactions.updateBalance(argsNewBalanceDestination);
+      res.status(200).json({
+        message: "Transfer transaction created successfully!",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      message: "Transfer transaction failed!",
+    });
+  }
+};

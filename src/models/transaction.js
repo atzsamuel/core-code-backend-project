@@ -61,7 +61,7 @@ module.exports.updateBalance = ({ user_id, account_id, new_balance }) => {
   return pool(SQL_UPDATE_BALANCE, bindings, { autoCommit: true });
 };
 
-module.exports.reportTransactionsTest =  ({
+module.exports.reportTransactionsTest = ({
   user_id,
   typeTransaction_id,
   category_id,
@@ -70,7 +70,7 @@ module.exports.reportTransactionsTest =  ({
 }) => {
   let bindings = {
     user_id,
-   /* typeTransaction_id,
+    /* typeTransaction_id,
      category_id,
     date_end,
     ba_account_id,*/
@@ -85,8 +85,8 @@ WHERE A.LOGIN_USER_ID=:user_id
   `;
 
   if (!parseInt(typeTransaction_id) === 0) {
-    SQL_REPORT_TRANSACTIONS  +=  ` AND A.OP_TRANSACTION_TYPE_ID = :typeTransaction_id`;
-    bindings.typeTransaction_id =  typeTransaction_id;
+    SQL_REPORT_TRANSACTIONS += ` AND A.OP_TRANSACTION_TYPE_ID = :typeTransaction_id`;
+    bindings.typeTransaction_id = typeTransaction_id;
   }
   if (!category_id == 0) {
     SQL_REPORT_TRANSACTIONS += ` AND A.OP_CATEGORY_ID = :category_id`;
@@ -101,7 +101,7 @@ WHERE A.LOGIN_USER_ID=:user_id
   return pool(SQL_REPORT_TRANSACTIONS, bindings);
 };
 
-module.exports.reportTransactions =  ({
+module.exports.reportTransactions = ({
   user_id,
   typeTransaction_id,
   category_id,
@@ -110,7 +110,7 @@ module.exports.reportTransactions =  ({
 }) => {
   let bindings = {
     user_id,
-   /* typeTransaction_id,
+    /* typeTransaction_id,
      category_id,
     date_end,
     ba_account_id,*/
@@ -124,4 +124,24 @@ FROM OP_TRANSACTION A
 WHERE A.LOGIN_USER_ID=:user_id
   `;
   return pool(SQL_REPORT_TRANSACTIONS, bindings);
+};
+
+module.exports.insertTransfer = ({
+  description,
+  amount,
+  account_id_destination,
+  account_id,
+  user_id,
+}) => {
+  const bindings = {
+    description,
+    amount,
+    account_id_destination,
+    account_id,
+    user_id,
+  };
+  const SQL_INSERT_TRANSFER = `
+  INSERT INTO OP_TRANSFER(OP_TRANSFER_ID, DESCRIPTION, TRANSFER_AMOUNT, DESTINATION_ACCOUNT_ID, BA_ACCOUNT_ID, LOGIN_USER_ID)
+VALUES(SQ_OP_TRANSFER.nextval,:description,:amount,:account_id_destination,:account_id,:user_id)`;
+  return pool(SQL_INSERT_TRANSFER, bindings, { autoCommit: true });
 };
