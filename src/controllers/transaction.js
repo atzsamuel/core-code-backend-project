@@ -93,3 +93,25 @@ module.exports.createTransaction = async (req, res, next) => {
     });
   }
 };
+
+module.exports.reportTransactions = async (req, res, next) => {
+  try {
+    const args = {
+      user_id: req.body.user_id,
+      typeTransaction_id: req.body.typeTransaction_id,
+      category_id: req.body.category_id,
+      date_end: req.body.date_end,
+      ba_account_id: req.body.ba_account_id,
+    };
+    const { rows } = await transactions.reportTransactions(args);
+    res.status(200).json({
+      message: "Transactions report retrieved successfully!",
+      data: rows,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      message: "Transactions report retrieval failed!",
+    });
+  }
+};

@@ -60,3 +60,68 @@ module.exports.updateBalance = ({ user_id, account_id, new_balance }) => {
   WHERE LOGIN_USER_ID = :user_id AND BA_ACCOUNT_ID = :account_id`;
   return pool(SQL_UPDATE_BALANCE, bindings, { autoCommit: true });
 };
+
+module.exports.reportTransactionsTest =  ({
+  user_id,
+  typeTransaction_id,
+  category_id,
+  date_end,
+  ba_account_id,
+}) => {
+  let bindings = {
+    user_id,
+   /* typeTransaction_id,
+     category_id,
+    date_end,
+    ba_account_id,*/
+  };
+  let SQL_REPORT_TRANSACTIONS = `
+  SELECT A.OP_TRANSACTION_ID AS ID,
+  A.DESCRIPTION,
+  A.AMOUNT,
+  TO_CHAR(A.ADD_DATE, 'DD/MM/YYYY') AS DATEADDED
+FROM OP_TRANSACTION A
+WHERE A.LOGIN_USER_ID=:user_id
+  `;
+
+  if (!parseInt(typeTransaction_id) === 0) {
+    SQL_REPORT_TRANSACTIONS  +=  ` AND A.OP_TRANSACTION_TYPE_ID = :typeTransaction_id`;
+    bindings.typeTransaction_id =  typeTransaction_id;
+  }
+  if (!category_id == 0) {
+    SQL_REPORT_TRANSACTIONS += ` AND A.OP_CATEGORY_ID = :category_id`;
+  }
+  if (!date_end == 0) {
+    SQL_REPORT_TRANSACTIONS += ` AND TO_CHAR(A.ADD_DATE, 'DD/MM/YYYY')<=:date_end`;
+  }
+  if (!ba_account_id == 0) {
+    SQL_REPORT_TRANSACTIONS += ` AND A.BA_ACCOUNT_ID = :ba_account_id`;
+  }
+  console.log(bindings, SQL_REPORT_TRANSACTIONS);
+  return pool(SQL_REPORT_TRANSACTIONS, bindings);
+};
+
+module.exports.reportTransactions =  ({
+  user_id,
+  typeTransaction_id,
+  category_id,
+  date_end,
+  ba_account_id,
+}) => {
+  let bindings = {
+    user_id,
+   /* typeTransaction_id,
+     category_id,
+    date_end,
+    ba_account_id,*/
+  };
+  let SQL_REPORT_TRANSACTIONS = `
+  SELECT A.OP_TRANSACTION_ID AS ID,
+  A.DESCRIPTION,
+  A.AMOUNT,
+  TO_CHAR(A.ADD_DATE, 'DD/MM/YYYY') AS DATEADDED
+FROM OP_TRANSACTION A
+WHERE A.LOGIN_USER_ID=:user_id
+  `;
+  return pool(SQL_REPORT_TRANSACTIONS, bindings);
+};
