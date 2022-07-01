@@ -23,3 +23,7 @@ ORACLE_CONNECT_STRING="localhost:1521/orclpdb"
 
 ## Documentation Api
 [Api documentation](https://docs.google.com/document/d/1cUSl4u4iEWOiDDfhMxLerFLrI-rly8_gJ8wQR_mAIho/edit?usp=sharing)
+
+## Entity Relation Database My-Budget
+
+![image](https://user-images.githubusercontent.com/26560418/176945194-041b0223-23b8-4d50-a90d-65bf9c5d6fb3.png)
