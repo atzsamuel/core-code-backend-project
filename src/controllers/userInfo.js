@@ -6,7 +6,7 @@ module.exports.userInfo = async (req, res, next) => {
     const args = { user_token: person_token };
     const { rows } = await userInfo.userInfo(args);
     res.status(200).json({
-      message: "Types accounts retrieved successfully!",
+      message: "User info retrieved successfully!",
       data: rows,
     });
   } catch (error) {
