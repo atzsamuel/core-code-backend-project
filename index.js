@@ -6,6 +6,7 @@ const cors = require("cors");
 const cookies = require("cookie-parser");
 const guard = require("./src/guard/guard");
 
+const userInfo = require("./src/routes/userInfo");
 const userRoutes = require("./src/routes/loginUser");
 const bankRoutes = require("./src/routes/bankAccount");
 const transactionRoutes = require("./src/routes/transaction");
@@ -23,6 +24,7 @@ app.use(userRoutes);
 app.use(guard);
 
 // api routes
+app.use(userInfo);
 app.use(bankRoutes);
 app.use(transactionRoutes);
 

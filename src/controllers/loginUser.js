@@ -24,7 +24,7 @@ module.exports.registerUser = async (req, res, next) => {
         message: "User registered successfully!",
         data: [
           {
-            user_token: user_token[0],
+            auth_token: user_token[0],
             email: args.email,
             firstname: args.firstname,
             lastname: args.lastname,
