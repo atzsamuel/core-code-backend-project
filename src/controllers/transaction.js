@@ -155,7 +155,7 @@ module.exports.transferAmount = async (req, res, next) => {
       const getBalanceDestination = parseFloat(rows[0].ACCOUNT_BALANCE);
       const argsNewBalanceDestination = {
         user_id: req.body.user_id,
-        account_id: req.body.account_id,
+        account_id: req.body.account_id_destination,
         new_balance:
           parseFloat(getBalanceDestination) + parseFloat(req.body.amount),
       };
