@@ -145,3 +145,23 @@ module.exports.insertTransfer = ({
 VALUES(SQ_OP_TRANSFER.nextval,:description,:amount,:account_id_destination,:account_id,:user_id)`;
   return pool(SQL_INSERT_TRANSFER, bindings, { autoCommit: true });
 };
+
+module.exports.reportTransfers = ({ user_id }) => {
+  const bindings = {
+    user_id,
+  };
+  const SQL_REPORT_TRANSFERS = `
+  SELECT A.OP_TRANSFER_ID AS ID,
+  A.DESCRIPTION,
+  A.TRANSFER_AMOUNT,
+  A.DESTINATION_ACCOUNT_ID AS DESTINATION,
+  A.BA_ACCOUNT_ID AS ORGIN,
+  B.NAME AS BANKACCOUNTORGIN,
+  TO_CHAR(A.ADD_DATE, 'DD/MM/YYYY') AS DATEADDED,
+  B.ACCOUNT_BALANCE AS BALANCEORIGIN
+FROM OP_TRANSFER A
+LEFT JOIN BA_ACCOUNT B ON A.BA_ACCOUNT_ID = B.BA_ACCOUNT_ID
+WHERE A.LOGIN_USER_ID=:user_id
+  `;
+  return pool(SQL_REPORT_TRANSFERS, bindings);
+};

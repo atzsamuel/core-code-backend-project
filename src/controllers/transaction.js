@@ -171,3 +171,21 @@ module.exports.transferAmount = async (req, res, next) => {
     });
   }
 };
+
+module.exports.reportTransfers = async (req, res, next) => {
+  try {
+    const args = {
+      user_id: req.body.user_id,
+    };
+    const { rows } = await transactions.reportTransfers(args);
+    res.status(200).json({
+      message: "Transfers report retrieved successfully!",
+      data: rows,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      message: "Transfers report retrieval failed!",
+    });
+  }
+};

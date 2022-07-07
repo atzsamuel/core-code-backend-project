@@ -74,3 +74,41 @@ module.exports.getTypes = async (req, res, next) => {
     });
   }
 };
+
+module.exports.getListBank = async (req, res, next) => {
+  const args = {
+    user_id: req.body.user_id,
+  };
+
+  try {
+    const { rows } = await bankAccount.getListBank(args);
+    res.status(200).json({
+      message: "List bank accounts retrieved successfully!",
+      data: rows,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      message: "List bank accounts retrieval failed!",
+    });
+  }
+};
+
+module.exports.getListAllAccountBank = async (req, res, next) => {
+  const args = {
+    user_id: req.body.user_id,
+  };
+
+  try {
+    const { rows } = await bankAccount.getListAllAccountBank(args);
+    res.status(200).json({
+      message: "List all bank accounts retrieved successfully!",
+      data: rows,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      message: "List all bank accounts retrieval failed!",
+    });
+  }
+};

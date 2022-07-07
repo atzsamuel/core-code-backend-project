@@ -54,3 +54,32 @@ module.exports.getTypeAccount = () => {
   SELECT BA_TYPE_ID AS ID, NAME FROM BA_TYPE ORDER BY BA_TYPE_ID`;
   return pool(SQL_GET_TYPE_ACCOUNT, {}, { autoCommit: true });
 };
+
+module.exports.getListBank = ({ user_id }) => {
+  const bindings = {
+    user_id,
+  };
+  const SQL_GET_LIST_BANK = `
+  SELECT BA_ACCOUNT_ID AS ID, NAME FROM BA_ACCOUNT WHERE LOGIN_USER_ID = :user_id ORDER BY BA_ACCOUNT_ID`;
+  return pool(SQL_GET_LIST_BANK, bindings, { autoCommit: true });
+};
+
+module.exports.getListAllAccountBank = ({ user_id }) => {
+  const bindings = {
+    user_id,
+  };
+  const SQL_GET_LIST_ALL_BANK = `
+  SELECT A.BA_ACCOUNT_ID AS ID,
+  A.NAME,
+  A.DESCRIPTION,
+  B.NAME AS CURRENCY,
+  A.ACCOUNT_BALANCE,
+  A.ACCOUNT_STATUS,
+  CASE WHEN A.ACCOUNT_STATUS=1 THEN 'Active' WHEN A.ACCOUNT_STATUS=2 THEN 'Inactive' END AS STATUS
+FROM BA_ACCOUNT A, BA_CURRENCY B
+WHERE A.LOGIN_USER_ID = :user_id
+AND A.BA_CURRENCY_ID=B.BA_CURRENCY_ID
+ORDER BY A.BA_ACCOUNT_ID
+  `;
+  return pool(SQL_GET_LIST_ALL_BANK, bindings, { autoCommit: true });
+};
