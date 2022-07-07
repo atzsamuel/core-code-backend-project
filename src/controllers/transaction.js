@@ -189,3 +189,21 @@ module.exports.reportTransfers = async (req, res, next) => {
     });
   }
 };
+
+module.exports.dashboard = async (req, res, next) => {
+  try {
+    const args = {
+      user_id: req.body.user_id,
+    };
+    const { rows } = await transactions.dashboard(args);
+    res.status(200).json({
+      message: "Dashboard retrieved successfully!",
+      data: rows,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      message: "Dashboard retrieval failed!",
+    });
+  }
+};
