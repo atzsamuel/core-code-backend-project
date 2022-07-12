@@ -2,7 +2,9 @@
 #https://hub.docker.com/r/gvenzl/oracle-xe  for more information
 #$docker pull gvenzl/oracle-xe (if you have not already downloaded the image via the Docker Hub,version:21.3.0)
 # RUN:
-#$docker run -d -p 1521:1521 -e ORACLE_PASSWORD=holamundo -e APP_USER=appuser -e APP_USER_PASSWORD=mipassword -v oracle-volume:/opt/oracle/oradata gvenzl/oracle-xe
+#$docker run -d -p 1521:1521 -e ORACLE_PASSWORD=holamundo -e APP_USER=appuser -e APP_USER_PASSWORD=mipassword gvenzl/oracle-xe
+# RUN: (with volume and initialization scripts)
+#$docker run -d -p 1521:1521 -e ORACLE_PASSWORD=holamundo -e APP_USER=appuser -e APP_USER_PASSWORD=mipassword -v oracle-volume:/opt/oracle/oradata -v yourdirectory/scripts:/container-entrypoint-initdb.d gvenzl/oracle-xe
 
 
 ## NODE JS APPLICATION
