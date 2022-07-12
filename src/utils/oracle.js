@@ -2,18 +2,19 @@ const oracledb = require("oracledb");
 const { oracleConfig } = require("../config/config");
 const path = require("path");
 
+// This is not needed if you use the default location for the database, but if you use a different location, you will need to use this function to get the correct path. 
 //Path to client
-const oracleClient = path.join(
+/*const oracleClient = path.join(
   "C:",
   "oracle",
   "WINDOWS.X64_193000_db_home",
   "bin"
-);
+);*/
 
 // Init client
-oracledb.initOracleClient({
+/*oracledb.initOracleClient({
   libDir: oracleClient,
-});
+});*/
 
 // Init database
 module.exports.start = async () => {

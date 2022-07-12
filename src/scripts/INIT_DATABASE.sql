@@ -20,6 +20,8 @@ Commands for creating user:
   $ ALTER USER <username> DEFAULT TABLESPACE users TEMPORARY TABLESPACE temp QUOTA UNLIMITED ON users;
 */
 
+ALTER SESSION SET CONTAINER=XEPDB1;
+
 -- Table person creation
 CREATE TABLE LOGIN_USER (
 	LOGIN_USER_ID NUMBER,
