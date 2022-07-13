@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+  namespace: default
+spec:
+  selector:
+    app: database
+  type: ClusterIP
+  ports:
+  - name: db-service
+    protocol: TCP
+    port: 1521
+    targetPort: 1521
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-pv-claim
+  labels:
+    app: database
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  database
+  namespace: default
+  labels:
+    app: database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      securityContext:
+        runAsUser: 54321    # Oracle User 
+        runAsGroup: 54321   # Oinstall group
+        fsGroup: 54321      # Oinstall group
+      volumes:
+      - name: db-config-volume
+        configMap:
+          name: db-config-map
+      - name: database-persistent-storage
+        persistentVolumeClaim:
+          claimName: database-pv-claim
+      containers:
+      - name: oracle-xe
+        image: gvenzl/oracle-xe:21.3.0
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 3000Mi
+        env:
+          - name: ORACLE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: sys-pass
+          - name: APP_USER
+            value: appuser
+          - name: APP_USER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: app-pass
+        ports:
+        - containerPort: 1521
+          name: database
+        volumeMounts:
+        - name: db-config-volume
+          mountPath: /container-entrypoint-initdb.d
+        - name: database-persistent-storage
+          mountPath: /opt/oracle/oradata
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+  namespace: default
+type: Opaque
+data:
+  sys-pass: aG9sYXN5cw==
+  app-pass: aG9sYW11bmRv
